@@ -70,7 +70,14 @@ export const SelahAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // IMPORTANTE: Esta variable se llena automáticamente gracias a vite.config.ts
+      const apiKey = process.env.API_KEY;
+
+      if (!apiKey) {
+        throw new Error("API Key no configurada. Por favor verifica la configuración en Vercel (VITE_API_KEY).");
+      }
+
+      const ai = new GoogleGenAI({ apiKey: apiKey });
       
       // Construct conversation history for context
       let prompt = "";
@@ -100,7 +107,7 @@ export const SelahAssistant: React.FC = () => {
 
     } catch (error) {
       console.error("Error communicating with Gemini:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "Lo siento, tuve un pequeño problema de conexión. ¿Podrías preguntarme de nuevo? O si prefieres, puedes escribirnos directamente al WhatsApp." }]);
+      setMessages(prev => [...prev, { role: 'model', text: "Lo siento, estoy teniendo problemas técnicos momentáneos de conexión. Por favor contáctanos vía WhatsApp para atención inmediata." }]);
     } finally {
       setIsLoading(false);
     }
