@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Menu, X, Calendar, MapPin, ArrowRight, CheckCircle, 
-  Leaf, Zap, Activity, Star, Phone, Mail, Instagram, 
-  Facebook, Youtube, MessageCircle, Play, Quote, BookOpen, Gift, FileText, Shield, AlertCircle
+  Leaf, Zap, Activity, Instagram, 
+  Facebook, Youtube, MessageCircle, Play, Quote, BookOpen, Gift, Shield, AlertCircle
 } from 'lucide-react';
 import { Button } from './components/Button';
 import { SelahAssistant } from './components/SelahAssistant';
@@ -1236,39 +1236,53 @@ function App() {
            <div className="max-w-4xl mx-auto px-4 text-center">
              {!isLeadSubmitted ? (
                <>
-                 <div className="inline-block p-3 bg-white/10 rounded-full mb-6">
-                   <Gift size={32} className="text-brand-accent" />
-                 </div>
-                 <h2 className="text-3xl font-bold mb-4">Regalo de Bienvenida</h2>
-                 <p className="text-lg text-brand-beige mb-8">Descarga GRATIS nuestra "Guía de Alimentación Anti-inflamatoria" y empieza a sanar desde tu cocina hoy mismo.</p>
-                 
-                 <div className="bg-white/10 p-6 rounded-xl backdrop-blur-sm max-w-lg mx-auto mb-8 text-left">
-                    <p className="font-bold text-brand-accent mb-2 uppercase text-sm tracking-wider">Lo que encontrarás dentro:</p>
-                    <ul className="space-y-2 text-sm text-gray-200">
-                       <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Lista de alimentos recomendados</li>
-                       <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Lista de alimentos prohibidos</li>
-                       <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Recetas de batidos sanadores</li>
-                       <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Plan de 3 días detox</li>
-                    </ul>
-                 </div>
+                 <div className="relative">
+                   <button 
+                     onClick={() => setIsLeadMagnetOpen(false)}
+                     className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 text-white/50 hover:text-white"
+                   >
+                     <X size={24} />
+                   </button>
+                   <div className="inline-block p-3 bg-white/10 rounded-full mb-6">
+                     <Gift size={32} className="text-brand-accent" />
+                   </div>
+                   <h2 className="text-3xl font-bold mb-4">Regalo de Bienvenida</h2>
+                   <p className="text-lg text-brand-beige mb-8">Descarga GRATIS nuestra "Guía de Alimentación Anti-inflamatoria" y empieza a sanar desde tu cocina hoy mismo.</p>
+                   
+                   <div className="bg-white/10 p-6 rounded-xl backdrop-blur-sm max-w-lg mx-auto mb-8 text-left">
+                      <p className="font-bold text-brand-accent mb-2 uppercase text-sm tracking-wider">Lo que encontrarás dentro:</p>
+                      <ul className="space-y-2 text-sm text-gray-200">
+                         <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Lista de alimentos recomendados</li>
+                         <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Lista de alimentos prohibidos</li>
+                         <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Recetas de batidos sanadores</li>
+                         <li className="flex items-center gap-2"><CheckCircle size={16} className="text-brand-accent"/> Plan de 3 días detox</li>
+                      </ul>
+                   </div>
 
-                 <form onSubmit={handleMagnetSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-                   <input 
-                     type="email" 
-                     placeholder="Tu correo electrónico" 
-                     required
-                     className="px-4 py-3 rounded-lg bg-white/10 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-brand-accent w-full"
-                     value={leadEmail}
-                     onChange={(e) => setLeadEmail(e.target.value)}
-                   />
-                   <Button variant="secondary" type="submit" className="whitespace-nowrap">
-                     Descargar Guía
-                   </Button>
-                 </form>
-                 <p className="text-xs text-white/50 mt-4">Respetamos tu privacidad. Cero SPAM.</p>
+                   <form onSubmit={handleMagnetSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                     <input 
+                       type="email" 
+                       placeholder="Tu correo electrónico" 
+                       required
+                       className="px-4 py-3 rounded-lg bg-white/10 text-white placeholder-white/70 border border-white/20 focus:outline-none focus:ring-2 focus:ring-brand-accent w-full"
+                       value={leadEmail}
+                       onChange={(e) => setLeadEmail(e.target.value)}
+                     />
+                     <Button variant="secondary" type="submit" className="whitespace-nowrap">
+                       Descargar Guía
+                     </Button>
+                   </form>
+                   <p className="text-xs text-white/50 mt-4">Respetamos tu privacidad. Cero SPAM.</p>
+                 </div>
                </>
              ) : (
-                <div className="animate-fade-in bg-white/10 p-8 rounded-2xl backdrop-blur-md border border-brand-accent/30">
+                <div className="animate-fade-in bg-white/10 p-8 rounded-2xl backdrop-blur-md border border-brand-accent/30 relative">
+                  <button 
+                     onClick={() => setIsLeadMagnetOpen(false)}
+                     className="absolute top-4 right-4 text-white/50 hover:text-white"
+                   >
+                     <X size={24} />
+                   </button>
                   <CheckCircle size={48} className="text-brand-accent mx-auto mb-4" />
                   <h3 className="text-2xl font-bold mb-2">¡Suscripción Exitosa!</h3>
                   <p className="text-brand-beige mb-6">La guía ha sido enviada a tu correo. También puedes abrirla ahora mismo.</p>
@@ -1666,7 +1680,7 @@ function App() {
                 {/* Introduction */}
                 <div className="prose prose-stone max-w-none">
                    <p className="text-xl text-gray-600 leading-relaxed text-center max-w-2xl mx-auto">
-                     "La inflamación es la raíz de casi todas las enfermedades crónicas. Antes de curar, debemos dejar de herir el organismo. Esta guía no es una dieta, es un protocolo de reparación."
+                     "La inflamación es la raíz de casi todas las enfermedades crónicas. Antes de curar, debemos dejar de herir. Esta guía no es una dieta, es un protocolo de reparación."
                    </p>
                 </div>
 
