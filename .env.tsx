@@ -1,2 +1,3 @@
-// Este archivo debe ser ignorado o eliminado. No contiene lógica de la aplicación.
+// Este archivo no se utiliza en la aplicación y puede ser ignorado.
+// No contiene lógica ni secretos.
 export {};
