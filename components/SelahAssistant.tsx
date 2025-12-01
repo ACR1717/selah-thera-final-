@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, Bot } from 'lucide-react';
+import { X, Send, Sparkles, Bot } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 interface Message {
@@ -89,9 +89,11 @@ export const SelahAssistant: React.FC = () => {
           temperature: 0.7,
         },
       });
+      
+      const responseText = response.text;
 
-      if (response.text) {
-        setMessages(prev => [...prev, { role: 'model', text: response.text }]);
+      if (responseText) {
+        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
          throw new Error("No response from AI");
       }
