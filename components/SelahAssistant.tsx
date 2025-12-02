@@ -7,11 +7,27 @@ interface Message {
   text: string;
 }
 
-export const SelahAssistant: React.FC = () => {
+interface SelahAssistantProps {
+  language: 'es' | 'en';
+}
+
+export const SelahAssistant: React.FC<SelahAssistantProps> = ({ language }) => {
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Initial greeting based on language
+  const initialGreeting = language === 'es' 
+    ? '¡Hola! Soy el Asistente de Bienestar de Selah Thera House. 🌿 ¿En qué puedo ayudarte hoy? Puedo explicarte nuestros tratamientos, precios o guiarte hacia el plan ideal.'
+    : 'Hello! I am the Wellness Assistant at Selah Thera House. 🌿 How can I help you today? I can explain our treatments, prices, or guide you to the ideal plan.';
+
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: '¡Hola! Soy el Asistente de Bienestar de Selah Thera House. 🌿 ¿En qué puedo ayudarte hoy? Puedo explicarte nuestros tratamientos, precios o guiarte hacia el plan ideal para tu salud.' }
+    { role: 'model', text: initialGreeting }
   ]);
+  
+  // Reset chat if language changes (optional, but good for consistency)
+  useEffect(() => {
+    setMessages([{ role: 'model', text: initialGreeting }]);
+  }, [language]);
+
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -25,39 +41,43 @@ export const SelahAssistant: React.FC = () => {
   }, [messages, isOpen]);
 
   const systemInstruction = `
-    Eres el Asistente Experto de Bienestar de "Selah Thera House", un centro de medicina integrativa de alto nivel en Heredia, Costa Rica.
-    Tu tono es: Cálido, Profesional, Empático, Científico pero accesible, y sutilmente persuasivo.
-
-    TU OBJETIVO:
-    Educar al usuario sobre la "Medicina del Futuro con Raíces Ancestrales" y guiarlos a agendar una cita o comprar un plan.
-
-    BASE DE CONOCIMIENTO (MANUAL OPERATIVO RESUMIDO):
+    You are the Expert Wellness Assistant for "Selah Thera House", a high-end integrative medicine center in Heredia, Costa Rica.
     
-    1. FILOSOFÍA:
-       - No tratamos síntomas, optimizamos la biología.
-       - Fórmula Clave: ABRIR (PEMF) -> LIMPIAR (Detox/Zapper) -> REPARAR (Luz Roja/Nutrición) -> SELLAR (Tesla/Escalar).
-       - Todo es 100% Natural, Indoloro y No Invasivo.
+    CURRENT LANGUAGE CONTEXT: ${language === 'es' ? 'SPANISH' : 'ENGLISH'}.
+    YOU MUST REPLY IN: ${language === 'es' ? 'SPANISH' : 'ENGLISH'}.
 
-    2. SERVICIOS Y PRECIOS (Siempre dalos en USD):
-       - "Valoración Inicial": GRATIS. Es el primer paso recomendado.
-       - "Therapeutic Day Pass" ($77 USD): Para ejecutivos/estrés. 3 horas. Incluye PEMF, Detox, Luz Roja, Bebida alcalina. (Precio regular $99).
-       - "Programa Recovery" ($770 USD): 10 Sesiones. Para dolor crónico/agudo. Incluye Escaneo 4D, Zapper, Detox, etc. (Precio regular $950).
-       - "Retreat Intensive" (Nosara, 10 días): $4,250 USD. Bootcamp de salud acelerado.
-       - "Retreat Recovery" (Nosara, 21 días): $7,875 USD. Transformación total para enfermedades crónicas.
+    TONE: Warm, Professional, Empathetic, Scientific yet accessible, and subtly persuasive.
 
-    3. TECNOLOGÍAS (EXPLICACIÓN SIMPLE):
-       - PEMF (Magnetoterapia): "El abrelatas celular". Abre la célula para que entren nutrientes y salgan toxinas.
-       - Detox Iónico: Saca toxinas por los pies mediante electrólisis.
-       - Zapper: Mata virus, bacterias y parásitos con frecuencias. IMPORTANTE: Siempre va seguido de Detox Iónico.
-       - Ondas Escalares / Oscilador Tesla: Recargan la batería de la célula (voltaje) y reparan el ADN.
-       - Escáner 4D: Diagnóstico preciso que ve el estado de tus órganos.
-       - Luz Roja: Alimenta las mitocondrias para dar energía.
+    GOAL:
+    Educate the user about "Future Medicine with Ancestral Roots" and guide them to book an appointment or buy a plan.
 
-    REGLAS DE INTERACCIÓN:
-    - Si mencionan un síntoma (dolor, fatiga, estrés), empatiza y explica cómo nuestra tecnología ataca la CAUSA RAÍZ (inflamación/toxinas) y sugiere la Valoración Inicial.
-    - Si preguntan por precios, sé directo y menciona el valor que obtienen.
-    - NUNCA des diagnósticos médicos definitivos ("tienes cáncer") ni recetes fármacos. Tu enfoque es bioregenerativo natural.
-    - Mantén las respuestas concisas (máximo 3-4 párrafos cortos). Usa emojis con moderación (🌿, ✨, 🔋).
+    KNOWLEDGE BASE:
+    
+    1. PHILOSOPHY:
+       - We don't treat symptoms, we optimize biology.
+       - Key Formula: OPEN (PEMF) -> CLEANSE (Detox/Zapper) -> REPAIR (Red Light/Nutrition) -> SEAL (Tesla/Scalar).
+       - All is 100% Natural, Painless, and Non-Invasive.
+
+    2. SERVICES & PRICES (Always in USD):
+       - "Initial Assessment" (Valoración Inicial): FREE. Recommended first step.
+       - "Therapeutic Day Pass": $77 USD (Reg $99). For executives/stress. 3 hours. Includes PEMF, Detox, Red Light, Alkaline Drink.
+       - "Recovery Program": $770 USD (Reg $950). 10 Sessions. For chronic/acute pain. Includes 4D Scan, Zapper, Detox, etc.
+       - "Retreat Intensive" (Nosara, 10 days): $4,250 USD. Health bootcamp.
+       - "Retreat Recovery" (Nosara, 21 days): $7,875 USD. Total transformation for chronic illness.
+
+    3. TECHNOLOGIES (SIMPLE EXPLANATION):
+       - PEMF: "The biological can opener". Opens cells for nutrients to enter and toxins to exit.
+       - Ionic Detox: Removes toxins via feet electrolysis.
+       - Zapper: Kills viruses/bacteria with frequencies. IMPORTANT: Always followed by Ionic Detox.
+       - Scalar Waves / Tesla Oscillator: Recharges cell battery (voltage) and repairs DNA.
+       - 4D Scanner: Precise diagnosis seeing organ status.
+       - Red Light: Feeds mitochondria for energy.
+
+    INTERACTION RULES:
+    - If they mention a symptom (pain, fatigue), empathize and explain how our tech attacks the ROOT CAUSE (inflammation/toxins).
+    - If asked for prices, be direct.
+    - NEVER give definitive medical diagnoses ("you have cancer") or prescribe drugs. Focus on natural bioregeneration.
+    - Keep answers concise (3-4 short paragraphs max).
   `;
 
   const handleSend = async (e?: React.FormEvent) => {
@@ -70,23 +90,20 @@ export const SelahAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // IMPORTANTE: Esta variable se llena automáticamente gracias a vite.config.ts
       const apiKey = process.env.API_KEY;
 
       if (!apiKey) {
-        throw new Error("API Key no configurada. Por favor verifica la configuración en Vercel (VITE_API_KEY).");
+        throw new Error("API Key config missing.");
       }
 
       const ai = new GoogleGenAI({ apiKey: apiKey });
       
-      // Construct conversation history for context
       let prompt = "";
-      // We take the last few messages to maintain context window
       const contextMessages = messages.slice(-6); 
       contextMessages.forEach(m => {
-         prompt += `${m.role === 'user' ? 'Usuario' : 'Asistente'}: ${m.text}\n`;
+         prompt += `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.text}\n`;
       });
-      prompt += `Usuario: ${userMessage}`;
+      prompt += `User: ${userMessage}`;
 
       const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
@@ -102,12 +119,15 @@ export const SelahAssistant: React.FC = () => {
       if (responseText) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       } else {
-         throw new Error("No response from AI");
+         throw new Error("No response");
       }
 
     } catch (error) {
-      console.error("Error communicating with Gemini:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "Lo siento, estoy teniendo problemas técnicos momentáneos de conexión. Por favor contáctanos vía WhatsApp para atención inmediata." }]);
+      console.error("Gemini Error:", error);
+      const errorMsg = language === 'es' 
+        ? "Lo siento, tengo problemas de conexión momentáneos. Por favor contáctanos por WhatsApp."
+        : "I'm sorry, I'm having temporary connection issues. Please contact us via WhatsApp.";
+      setMessages(prev => [...prev, { role: 'model', text: errorMsg }]);
     } finally {
       setIsLoading(false);
     }
@@ -115,28 +135,26 @@ export const SelahAssistant: React.FC = () => {
 
   return (
     <>
-      {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-40 bg-brand-accent hover:bg-[#B5952F] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center group ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        aria-label={language === 'es' ? "Abrir chat" : "Open chat"}
       >
         <Sparkles className="w-6 h-6 animate-pulse group-hover:animate-spin" />
         <span className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-bounce"></span>
       </button>
 
-      {/* Chat Interface */}
       <div className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[90vw] sm:w-96 bg-white rounded-2xl shadow-2xl border border-brand-primary/20 flex flex-col transition-all duration-500 origin-bottom-right transform ${isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-10 pointer-events-none'}`} style={{ height: '550px', maxHeight: '80vh' }}>
         
-        {/* Header */}
         <div className="bg-brand-dark text-white p-4 rounded-t-2xl flex justify-between items-center shadow-md">
           <div className="flex items-center gap-3">
             <div className="bg-white/10 p-2 rounded-full border border-white/20">
               <Bot className="w-6 h-6 text-brand-accent" />
             </div>
             <div>
-              <h3 className="font-bold text-base tracking-wide">Asistente Selah</h3>
+              <h3 className="font-bold text-base tracking-wide">{language === 'es' ? 'Asistente Selah' : 'Selah Assistant'}</h3>
               <p className="text-xs text-brand-light flex items-center gap-1">
-                <span className="w-2 h-2 bg-green-400 rounded-full inline-block animate-pulse"></span> En línea (IA)
+                <span className="w-2 h-2 bg-green-400 rounded-full inline-block animate-pulse"></span> {language === 'es' ? 'En línea (IA)' : 'Online (AI)'}
               </p>
             </div>
           </div>
@@ -148,7 +166,6 @@ export const SelahAssistant: React.FC = () => {
           </button>
         </div>
 
-        {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4 bg-[#F5F5F0] space-y-4 custom-scrollbar">
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -166,7 +183,7 @@ export const SelahAssistant: React.FC = () => {
           {isLoading && (
             <div className="flex justify-start">
               <div className="bg-white p-4 rounded-2xl rounded-bl-none border border-gray-200 shadow-sm flex gap-1 items-center">
-                <span className="text-xs text-gray-400 mr-2">Pensando</span>
+                <span className="text-xs text-gray-400 mr-2">{language === 'es' ? 'Pensando' : 'Thinking'}</span>
                 <div className="w-1.5 h-1.5 bg-brand-accent rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                 <div className="w-1.5 h-1.5 bg-brand-accent rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                 <div className="w-1.5 h-1.5 bg-brand-accent rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -176,13 +193,12 @@ export const SelahAssistant: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area */}
         <form onSubmit={handleSend} className="p-4 border-t border-gray-100 bg-white rounded-b-2xl flex gap-2 items-center">
           <input
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Pregunta sobre terapias..."
+            placeholder={language === 'es' ? "Pregunta sobre terapias..." : "Ask about therapies..."}
             className="flex-1 bg-gray-50 text-brand-dark text-sm rounded-xl px-4 py-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
           />
           <button 
