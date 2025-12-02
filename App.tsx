@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Menu, X, Calendar, MapPin, ArrowRight, CheckCircle, 
   Leaf, Zap, Activity, Instagram, 
-  Facebook, Youtube, MessageCircle, Play, Quote, BookOpen, Gift, Shield, AlertCircle, Globe
+  Facebook, Youtube, MessageCircle, Play, Quote, BookOpen, Gift, Shield, AlertCircle, Globe, ChevronDown, ChevronUp, Plus
 } from 'lucide-react';
 import { Button } from './components/Button';
 import { SelahAssistant } from './components/SelahAssistant';
@@ -114,7 +114,24 @@ const translations = {
       bac: "Tasa Cero BAC | 0% Interés"
     },
     faq: {
-      title: "Preguntas Frecuentes"
+      title: "Condiciones Tratadas",
+      subtitle: "¿Es el Método Selah para mí?",
+      items: [
+        {
+          q: "1. Optimización y Alto Rendimiento (Personas Sanas)",
+          a: "Diseñado para ejecutivos, empresarios, deportistas y bio-hackers que no están 'enfermos' pero quieren más. Enfocado en: Aumento masivo de energía mitocondrial, claridad mental (brain fog), mejora profunda del sueño, desintoxicación preventiva, manejo de estrés y fortalecimiento del sistema inmune."
+        },
+        {
+          q: "2. Condiciones Agudas (Dolor e Inflamación)",
+          a: "Intervención rápida y no invasiva para: Lesiones deportivas recientes, dolor de espalda o cuello, migrañas, estrés agudo / burnout, recuperación post-operatoria acelerada (cicatrización) y procesos inflamatorios recientes."
+        },
+        {
+          q: "3. Condiciones Crónicas y Degenerativas",
+          a: "Apoyo integral profundo para: Fibromialgia, artritis, fatiga crónica, desórdenes digestivos, problemas autoinmunes, secuelas de tratamientos agresivos y desequilibrios hormonales. No solo tratamos el síntoma, buscamos restablecer el terreno biológico para devolver calidad de vida."
+        }
+      ],
+      note_1: "¿No encontró su condición en la lista?",
+      note_cta: "Contáctenos aquí"
     },
     testimonials: {
       label: "Historias Reales",
@@ -172,7 +189,7 @@ const translations = {
       philosophy: "Our Philosophy",
       title: "Selah Thera House: \nYour Return to Balance",
       p1: "Do you feel that despite your success, your energy is not the same? Modern stress, fatigue, inflammation, and chronic pain are not 'normal'. They are signals from your body asking for help.",
-      p2: "We integrate the ancestral wisdom of Traditional Chinese Medicine, Ayurveda, and Arabic Medicine (Apitherapy, Phytotherapy, Hydrotherapy, Heliotherapy, Thalassotherapy) with advanced technology and a healing nutrition system.",
+      p2: "We integrate the ancestral wisdom of Traditional Chinese Medicine, Ayurveda, and Arabic Medicine (Apiterapy, Phytotherapy, Hydrotherapy, Heliotherapy, Thalassotherapy) with advanced technology and a healing nutrition system.",
       result: "The result: The Selah Method. 100% Natural, 100% Painless, and without side effects.",
       disclaimer: "Our protocols have scientific and technological foundations, acting as a powerful complement to traditional medicine. However, they do not constitute a medical diagnosis nor substitute your personal doctor's recommendations.",
       learn_more: "Know our philosophy",
@@ -234,7 +251,24 @@ const translations = {
       bac: "BAC 0% Interest Available"
     },
     faq: {
-      title: "Frequently Asked Questions"
+      title: "Conditions Treated",
+      subtitle: "Is the Selah Method for me?",
+      items: [
+        {
+          q: "1. Optimization & High Performance (Healthy Individuals)",
+          a: "Designed for executives, entrepreneurs, athletes, and bio-hackers who aren't 'sick' but want more. Focused on: Massive mitochondrial energy boost, mental clarity (brain fog), deep sleep improvement, preventive detoxification, stress management, and immune system strengthening."
+        },
+        {
+          q: "2. Acute Conditions (Pain & Inflammation)",
+          a: "Rapid and non-invasive intervention for: Recent sports injuries, back or neck pain, migraines, acute stress/burnout, accelerated post-operative recovery (healing), and recent inflammatory processes."
+        },
+        {
+          q: "3. Chronic & Degenerative Conditions",
+          a: "Deep integral support for: Fibromyalgia, arthritis, chronic fatigue, digestive disorders, autoimmune issues, treatment aftermath, and hormonal imbalances. We don't just treat the symptom; we seek to restore biological terrain to return quality of life."
+        }
+      ],
+      note_1: "Didn't find your condition on the list?",
+      note_cta: "Contact us here"
     },
     testimonials: {
       label: "Real Stories",
@@ -879,17 +913,45 @@ function App() {
         </div>
       </section>
 
-      {/* --- FAQ SECTION (Simplified) --- */}
+      {/* --- FAQ SECTION (UPDATED) --- */}
       <section className="py-20 bg-brand-beige/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-brand-dark">{t.faq.title}</h2>
+            <span className="text-brand-primary font-bold tracking-wider uppercase text-sm">{t.faq.title}</span>
+            <h2 className="text-3xl font-bold text-brand-dark mt-2">{t.faq.subtitle}</h2>
           </div>
-          {/* FAQ Logic remains the same, just showing 1 generic item for structure */}
+          
           <div className="space-y-4">
-             <div className="bg-white rounded-lg shadow-sm overflow-hidden p-6 text-center text-gray-500 italic">
-               {language === 'es' ? "Preguntas cargadas dinámicamente..." : "FAQs loaded dynamically..."}
-             </div>
+            {t.faq.items.map((item, index) => (
+              <div 
+                key={index} 
+                className={`bg-white rounded-lg shadow-sm overflow-hidden transition-all duration-300 border ${activeAccordion === index ? 'border-brand-primary' : 'border-transparent'}`}
+              >
+                <button 
+                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 focus:outline-none"
+                  onClick={() => setActiveAccordion(activeAccordion === index ? null : index)}
+                >
+                  <span className="font-bold text-brand-dark">{item.q}</span>
+                  {activeAccordion === index ? <ChevronUp className="text-brand-primary" /> : <ChevronDown className="text-gray-400" />}
+                </button>
+                <div 
+                  className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${activeAccordion === index ? 'max-h-96 opacity-100 pb-6' : 'max-h-0 opacity-0'}`}
+                >
+                  <p className="text-gray-600 leading-relaxed text-sm pt-2 border-t border-gray-100">{item.a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center bg-white p-6 rounded-xl border border-brand-accent/30 shadow-sm max-w-lg mx-auto">
+            <p className="text-gray-600 mb-3">{t.faq.note_1}</p>
+            <Button 
+              variant="outline" 
+              className="!py-2 !px-6 mx-auto"
+              onClick={() => setIsContactFormOpen(true)}
+            >
+              {t.faq.note_cta}
+            </Button>
           </div>
         </div>
       </section>
