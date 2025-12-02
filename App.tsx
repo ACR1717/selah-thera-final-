@@ -500,11 +500,23 @@ function App() {
     },
     {
       id: 3,
-      title: language === 'es' ? "Apiterapia: El oro líquido" : "Apitherapy: Liquid Gold",
-      excerpt: language === 'es' ? "Propóleo, jalea real y veneno de abeja para la regeneración." : "Propolis, royal jelly, and bee venom for regeneration.",
-      image: "https://i.postimg.cc/1XjstfN1/apiterapia.jpg",
-      category: language === 'es' ? "Medicina Ancestral" : "Ancestral Medicine",
-      content: language === 'es' ? <p>Uso medicinal de productos de la colmena.</p> : <p>Medicinal use of hive products.</p>,
+      title: language === 'es' ? "Ondas Escalares: Energía Pura" : "Scalar Waves: Pure Energy",
+      excerpt: language === 'es' ? "Restaura el voltaje celular y repara el ADN con tecnología Tesla avanzada." : "Restore cellular voltage and repair DNA with advanced Tesla technology.",
+      image: "https://i.postimg.cc/qMzsqSCX/osilador-tesla.jpg",
+      category: language === 'es' ? "Tecnología Biofísica" : "Biophysics Tech",
+      content: language === 'es' ? (
+         <div className="space-y-4">
+            <p>Las ondas escalares, basadas en los principios de Nikola Tesla, no son ondas electromagnéticas comunes. Son ondas longitudinales capaces de atravesar la materia sólida sin perder fuerza.</p>
+            <h4 className="font-bold text-brand-primary">¿Qué hacen en tu cuerpo?</h4>
+            <p>Funcionan como un "cargador de batería" para tus células. Una célula sana tiene un voltaje de -70mV. Una célula enferma o cancerosa cae a -15mV. Esta tecnología ayuda a restaurar el voltaje óptimo, permitiendo que el cuerpo active sus propios mecanismos de regeneración.</p>
+         </div>
+      ) : (
+         <div className="space-y-4">
+            <p>Scalar waves, based on Nikola Tesla's principles, are not common electromagnetic waves. They are longitudinal waves capable of passing through solid matter without losing strength.</p>
+            <h4 className="font-bold text-brand-primary">What do they do in your body?</h4>
+            <p>They act like a "battery charger" for your cells. A healthy cell has a voltage of -70mV. A sick or cancerous cell drops to -15mV. This technology helps restore optimal voltage, allowing the body to trigger its own regeneration mechanisms.</p>
+         </div>
+      ),
       ctaText: language === 'es' ? "Agendar Valoración" : "Book Assessment",
       ctaAction: () => handleBookingOpen("Valoración Inicial")
     },
