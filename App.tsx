@@ -684,12 +684,15 @@ function App() {
               </div>
             </div>
 
-            {/* Video Placeholder - UPDATED with Beach Sunset */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer" onClick={() => setIsVideoOpen(true)}>
+            {/* Video Placeholder - UPDATED with Autoplay Video */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer h-[400px]" onClick={() => setIsVideoOpen(true)}>
                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors z-10" />
-               <img 
-                 src="https://images.unsplash.com/photo-1616061039163-56e8894b3764?auto=format&fit=crop&q=80&w=1000" 
-                 alt="Atardecer en la Playa Selah Thera House" 
+               <video 
+                 src="https://videos.pexels.com/video-files/3209048/3209048-hd_1920_1080_25fps.mp4" 
+                 autoPlay 
+                 muted 
+                 loop 
+                 playsInline
                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                />
                <div className="absolute inset-0 flex items-center justify-center z-20">
