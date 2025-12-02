@@ -1356,10 +1356,10 @@ function App() {
               
               {/* Social Icons */}
               <div className="flex gap-4 mt-8 justify-center">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram size={20} /></a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook size={20} /></a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors"><TikTokIcon className="w-5 h-5" /></a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors"><Youtube size={20} /></a>
+                <a href="https://www.instagram.com/augustocesarromero/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><Instagram size={20} /></a>
+                <a href="https://www.facebook.com/coachaugustocesar" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><Facebook size={20} /></a>
+                <a href="https://www.tiktok.com/@augustocesaromeroselah" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><TikTokIcon className="w-5 h-5" /></a>
+                <a href="https://www.youtube.com/@AugustoCesarRomero" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><Youtube size={20} /></a>
               </div>
             </div>
 
