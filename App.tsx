@@ -42,7 +42,7 @@ const translations = {
       slide1: "Mi camino hacia la salud integral empieza aquí",
       slide2: "Renuevo mi cuerpo y mente con terapias naturales",
       slide3: "Medicina ancestral + tecnología moderna = bienestar",
-      slide4: "Selah Thera House no es una clínica, es el lugar donde mi cuerpo recordó cómo sanarse a sí mismo",
+      slide4: "Selah Thera House no es una clínica, es el lugar donde mi cuerpo recordó cómo sanarse",
       desc: "Donde la ciencia natural moderna y la sabiduría ancestral se unen para recuperar tu vitalidad.",
       cta_primary: "Agendar Valoración Gratis",
       cta_secondary: "Ver Planes",
